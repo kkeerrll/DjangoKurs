@@ -8,34 +8,56 @@ class Mailing(models.Model):
     text = models.TextField()
     audience = models.CharField(max_length=50)
 
+class Client(models.Model):
+    email = models.EmailField()
+    full_name = models.CharField(max_length=100)
+    comment = models.TextField()
 
-# class Client(models.Model):
-#     email = models.CharField(max_length=50, blank=False, verbose_name='email')
-#     name = models.TextField(verbose_name='ФИО', blank=False)
-#     comment = models.TextField(verbose_name='комментарий', blank=False)
+    def __str__(self):
+        return self.email
 
-    # def __str__(self):
-    #     return f'{self.name}, {self.description}'
 
-    # class Meta:
-    #     ordering = ('name',)
-    #     verbose_name = 'Категория'
-    #     verbose_name_plural = 'Категории'
+class Mailing(models.Model):
+    TIME_CHOICES = [
+        ('08:00', '08:00'),
+        ('09:00', '09:00'),
+        ('10:00', '10:00'),
+        # Добавьте другие варианты времени
+    ]
 
-# class Mail(models.Model):
-#     id = models.IntegerField()
-#     header = models.TextField(verbose_name='тема')
-#     body = models.CharField(max_length=50, blank=False, verbose_name='тело')
-#
-# class Settings(models.Model):
-#     mail_id = models.ForeignKey(Mail, on_delete=models.CASCADE, default=1, verbose_name='id')
-#     time = models.DateTimeField(auto_now_add=True)
-#     frequency = models.TextField(verbose_name='периодичность')
-#     status = models.CharField(max_length=50, blank=False, verbose_name='статус рассылки')
-#
-#
-# class Log(models.Model):
-#     mail_id = models.ForeignKey(Mail, on_delete=models.CASCADE, default=1, verbose_name='id')
-#     time = models.DateTimeField(auto_now_add=True)
-#     status = models.CharField(max_length=50, blank=False, verbose_name='статус попытки')
-#     response = models.IntegerField()
+    FREQUENCY_CHOICES = [
+        ('daily', 'Daily'),
+        ('weekly', 'Weekly'),
+        ('monthly', 'Monthly'),
+    ]
+
+    time = models.CharField(max_length=5, choices=TIME_CHOICES)
+    frequency = models.CharField(max_length=10, choices=FREQUENCY_CHOICES)
+    status = models.CharField(max_length=10)
+    message = models.ForeignKey('Message', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Mailing - {self.id}"
+
+
+class Message(models.Model):
+    subject = models.CharField(max_length=200)
+    body = models.TextField()
+
+    def __str__(self):
+        return self.subject
+
+
+class Log(models.Model):
+    mailing = models.ForeignKey('Mailing', on_delete=models.CASCADE)
+    message = models.ForeignKey('Message', on_delete=models.CASCADE)
+    recipient = models.EmailField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20)
+    response = models.TextField()
+
+    def __str__(self):
+        return f"Log - {self.id}"
+
+
+
