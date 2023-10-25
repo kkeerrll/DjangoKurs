@@ -1,0 +1,77 @@
+[
+  {
+    "model": "mailing.client",
+    "pk": 1,
+    "fields": {
+      "email": "kazan313131@gmail.com",
+      "full_name": "Uriy Kazan",
+      "comment": "Hello)",
+      "is_active": true
+    }
+  },
+  {
+    "model": "mailing.client",
+    "pk": 2,
+    "fields": {
+      "email": "kun-140386-b@yandex.ru",
+      "full_name": "Юрий",
+      "comment": "Привет",
+      "is_active": true
+    }
+  },
+  {
+    "model": "mailing.client",
+    "pk": 3,
+    "fields": {
+      "email": "odd@gmail.com",
+      "full_name": "Денис",
+      "comment": "Привет",
+      "is_active": false
+    }
+  },
+  {
+    "model": "mailing.mailing",
+    "pk": 1,
+    "fields": {
+      "start_time": "2023-10-16T13:22:39Z",
+      "frequency": "weekly",
+      "status": "created",
+      "recipients": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "mailing.mailing",
+    "pk": 2,
+    "fields": {
+      "start_time": "2023-10-16T13:35:30Z",
+      "frequency": "daily",
+      "status": "started",
+      "recipients": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 1,
+    "fields": {
+      "mailing": 1,
+      "subject": "Новый продукт",
+      "body": "У нас для вас хорошее предложение"
+    }
+  },
+  {
+    "model": "mailing.log",
+    "pk": 1,
+    "fields": {
+      "message": 1,
+      "timestamp": "2023-10-16T13:27:08.444Z",
+      "status": "положительно",
+      "response": "работаем дальше"
+    }
+  }
+]
